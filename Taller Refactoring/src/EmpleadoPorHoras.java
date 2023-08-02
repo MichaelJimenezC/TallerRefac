@@ -1,24 +1,21 @@
 public class EmpleadoPorHoras extends Empleado {
-    private String genero;
-
-    public EmpleadoPorHoras(String nombre, int horasTrabajadas, double tarifaHora, String departamento, String genero) {
-        super(nombre, 0, horasTrabajadas, tarifaHora, departamento);
-        super.setSalarioBase(calcularSalario());
-        this.genero = genero;
+	private double tarifaHora;
+	private double salario;
+    public EmpleadoPorHoras(String nombre, String genero, String departamento, int horasTrabajadas,double tarifaHora) {
+    	super( nombre,  genero,  departamento,  horasTrabajadas);
+        this.salario=calcularSalario();
+        this.tarifaHora=tarifaHora;
     }
-
+    @Override
     public void imprimirDetalles() {
-        System.out.println("Nombre: " + super.getNombre());
-        System.out.println("Genero: " + super.getNombre());
-        System.out.println("Salario: " + super.getSalarioBase());
-        System.out.println("Horas trabajadas: " + super.getHorasTrabajadas());
-        System.out.println("Departamento: " + super.getDepartamento());
+    	super.imprimirDetalles();
+    	System.out.println("Tarifa por hora: " + tarifaHora); 
+    	System.out.println("Sueldo: " + salario); 
     }
 
     @Override
-    public double calcularSalario() {
-        double salario = super.getHorasTrabajadas() * super.getTarifaHora();
-        return salario;
+    public double calcularSalario() {       
+        return super.getHorasTrabajadas() * this.tarifaHora;
     }
 
     // Más metodos
