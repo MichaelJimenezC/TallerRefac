@@ -9,34 +9,47 @@ public class EmpleadoSalarioBase extends Empleado {
 	@Override 
 
 	public double calcularSalario() {
-		if (salarioBase <= 0) {
-		throw new IllegalArgumentException("El salario debe ser mayor o igual a 0");
-		}
+	    validarSalarioYHoras();
 
-		if (getHorasTrabajadas() < 0) {
-		throw new IllegalArgumentException("Las horas trabajadas deben ser mayor o igual a 0");
-		}
+	    double salarioTotal = calcularSalarioBase();
+	    calcularHorasExtra(salarioTotal);
+	    ajustarSalarioPorDepartamento(salarioTotal);
 
-		double salarioTotal = salarioBase;
+	    return salarioTotal;
+	}
 
-		// Horas trabajadas normales = 40;
-		if (getHorasTrabajadas() > 40) {
-		salarioTotal += (getHorasTrabajadas() - 40) * 50; // Pago de horas extra
-		}
+	private void validarSalarioYHoras() {
+	    if (salarioBase <= 0) {
+	        throw new IllegalArgumentException("El salario debe ser mayor o igual a 0");
+	    }
 
-		switch (getDepartamento()) {
-			case "Sistemas":
-			salarioTotal += 20;
-			break;
-			case "Contabilidad":
-			salarioTotal += 10;
-			break;
-			default:
-			break;
-		}
+	    if (getHorasTrabajadas() < 0) {
+	        throw new IllegalArgumentException("Las horas trabajadas deben ser mayor o igual a 0");
+	    }
+	}
 
-		return salarioTotal;
-		}
+	private double calcularSalarioBase() {
+	    return salarioBase;
+	}
+
+	private void calcularHorasExtra(double salarioTotal) {
+	    if (getHorasTrabajadas() > 40) {
+	        salarioTotal += (getHorasTrabajadas() - 40) * 50; // Pago de horas extra
+	    }
+	}
+
+	private void ajustarSalarioPorDepartamento(double salarioTotal) {
+	    switch (getDepartamento()) {
+	        case "Sistemas":
+	            salarioTotal += 20;
+	            break;
+	        case "Contabilidad":
+	            salarioTotal += 10;
+	            break;
+	        default:
+	            break;
+	    }
+	}
 	@Override
     public void imprimirDetalles() {
     	super.imprimirDetalles();
